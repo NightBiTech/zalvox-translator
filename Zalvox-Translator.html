@@ -155,29 +155,26 @@
       const input = document.getElementById("inputText").value.toLowerCase();
       const words = input.replace(/[!?\\.]/g, "").split(" ");
 
-      let subject = "",
-        verb = "",
-        object = "";
       const mood = detectMood(input);
       const tense = "present";
 
-      for (let i = 0; i < words.length; i++) {
-        const word = words[i];
+      let translatedWords = [];
+
+      for (let word of words) {
         if (dictionary[word]) {
-          if (!subject) subject = dictionary[word];
-          else if (!verb) verb = word;
-          else object = dictionary[word];
+          // If it's a verb, apply vowel harmony
+          if (["eat", "love", "see", "say", "go", "make", "know", "want", "need", "come"].includes(word)) {
+            translatedWords.push(getVerbForm(dictionary[word], mood, tense));
+          } else {
+            translatedWords.push(dictionary[word]);
+          }
+        } else {
+          // Word not found
+          translatedWords.push(`[${word}]`);
         }
       }
 
-      let output = "";
-      if (verb && dictionary[verb]) {
-        const verbForm = getVerbForm(dictionary[verb], mood, tense);
-        output = `${subject} ${verbForm} ${object}`;
-      } else {
-        output = "Cannot translate this sentence.";
-      }
-
+      const output = translatedWords.join(" ");
       document.getElementById("outputText").innerText = output;
       lastZalvoxOutput = output;
       document.getElementById("replayButton").disabled = false;
@@ -199,5 +196,6 @@
   </script>
 </body>
 </html>
+
 
 
