@@ -1,120 +1,119 @@
- <!DOCTYPE html>\
-<html lang="en">\
-<head>\
-  <meta charset="UTF-8">\
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">\
-  <title>Zalvox Auto Translator</title>\
-  <style>\
-    body \{\
-      font-family: Arial, sans-serif;\
-      background: #111;\
-      color: #eee;\
-      padding: 2rem;\
-      max-width: 600px;\
-      margin: auto;\
-    \}\
-    textarea \{\
-      width: 100%;\
-      height: 100px;\
-      margin-top: 1rem;\
-      padding: 0.5rem;\
-      font-size: 1rem;\
-    \}\
-    button \{\
-      padding: 0.5rem 1rem;\
-      margin-top: 1rem;\
-      background: #444;\
-      color: white;\
-      border: none;\
-      cursor: pointer;\
-    \}\
-    .output \{\
-      margin-top: 1rem;\
-      background: #222;\
-      padding: 1rem;\
-      border-radius: 5px;\
-    \}\
-  </style>\
-</head>\
-<body>\
-  <h1>Zalvox Auto Translator</h1>\
-  <p>Enter an English sentence to translate:</p>\
-  <textarea id="inputText"></textarea>\
-  <br>\
-  <button onclick="translate()">Translate</button>\
-  <div class="output" id="outputText"></div>\
-\
-  <script>\
-    const dictionary = \{\
-      "i": "zel",\
-      "you": "tu",\
-      "he": "nar",\
-      "she": "nar",\
-      "eat": "var",\
-      "love": "mel",\
-      "friend": "sul",\
-      "bread": "dom",\
-      "water": "aken",\
-      "home": "trela"\
-    \};\
-\
-    const vowelMoods = \{\
-      "neutral": "a",\
-      "command": "e",\
-      "question": "i",\
-      "hope": "o",\
-      "angry": "u",\
-      "loving": "ai"\
-    \};\
-\
-    const tenseSuffix = \{\
-      "present": "a",\
-      "past": "t",\
-      "future": "el",\
-      "perfect": "es",\
-      "continuous": "in"\
-    \};\
-\
-    function detectMood(text) \{\
-      if (text.includes("!")) return "command";\
-      if (text.includes("?")) return "question";\
-      if (text.includes("love")) return "loving";\
-      if (text.includes("not") || text.includes("angry")) return "angry";\
-      return "neutral";\
-    \}\
-\
-    function getVerbForm(verb, mood, tense) \{\
-      const root = verb.replace(/[aeiou]/g, vowelMoods[mood]);\
-      return root + tenseSuffix[tense];\
-    \}\
-\
-    function translate() \{\
-      const input = document.getElementById("inputText").value.toLowerCase();\
-      const words = input.replace(/[!?\\.]/g, '').split(" ");\
-\
-      let subject = "", verb = "", object = "", output = "";\
-      const mood = detectMood(input);\
-      const tense = "present";\
-\
-      for (let i = 0; i < words.length; i++) \{\
-        const word = words[i];\
-        if (dictionary[word]) \{\
-          if (!subject) subject = dictionary[word];\
-          else if (!verb) verb = word;\
-          else object = dictionary[word];\
-        \}\
-      \}\
-\
-      if (verb) \{\
-        const verbForm = getVerbForm(dictionary[verb], mood, tense);\
-        output = `$\{subject\} $\{verbForm\} $\{object\}`;\
-      \} else \{\
-        output = "Unable to translate verb.";\
-      \}\
-\
-      document.getElementById("outputText").innerText = output;\
-    \}\
-  </script>\
-</body>\
-</html>\
-	}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zalvox Translator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #eee;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      background-color: #222;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zalvox Translator</h1>
+  <textarea id="inputText" placeholder="Type a sentence like: I love you"></textarea>
+  <br>
+  <button id="translateButton">Translate</button>
+  <div class="output" id="outputText"></div>
+
+  <script>
+    const dictionary = {
+      "i": "zel",
+      "you": "tu",
+      "he": "nar",
+      "she": "nar",
+      "eat": "var",
+      "love": "mel",
+      "friend": "sul",
+      "bread": "dom",
+      "water": "aken",
+      "home": "trela"
+    };
+
+    const vowelMoods = {
+      "neutral": "a",
+      "command": "e",
+      "question": "i",
+      "hope": "o",
+      "angry": "u",
+      "loving": "ai"
+    };
+
+    const tenseSuffix = {
+      "present": "a",
+      "past": "t",
+      "future": "el",
+      "perfect": "es",
+      "continuous": "in"
+    };
+
+    function detectMood(text) {
+      if (text.includes("!")) return "command";
+      if (text.includes("?")) return "question";
+      if (text.includes("love")) return "loving";
+      if (text.includes("not") || text.includes("angry")) return "angry";
+      return "neutral";
+    }
+
+    function getVerbForm(verb, mood, tense) {
+      const v = vowelMoods[mood];
+      const newVerb = verb.replace(/[aeiou]/g, v);
+      return newVerb + tenseSuffix[tense];
+    }
+
+    function handleTranslate() {
+      const input = document.getElementById("inputText").value.toLowerCase();
+      const words = input.replace(/[!?\\.]/g, '').split(" ");
+
+      let subject = "", verb = "", object = "";
+      const mood = detectMood(input);
+      const tense = "present";
+
+      for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        if (dictionary[word]) {
+          if (!subject) subject = dictionary[word];
+          else if (!verb) verb = word;
+          else object = dictionary[word];
+        }
+      }
+
+      let output = "";
+      if (verb && dictionary[verb]) {
+        const verbForm = getVerbForm(dictionary[verb], mood, tense);
+        output = `${subject} ${verbForm} ${object}`;
+      } else {
+        output = "Cannot translate this sentence.";
+      }
+
+      document.getElementById("outputText").innerText = output;
+    }
+
+    document.getElementById("translateButton").addEventListener("click", handleTranslate);
+  </script>
+</body>
+</html>
+
