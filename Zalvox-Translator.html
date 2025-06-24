@@ -18,6 +18,7 @@
     }
     button {
       margin-top: 10px;
+      margin-right: 10px;
       padding: 10px;
       background-color: #444;
       color: white;
@@ -37,6 +38,7 @@
   <textarea id="inputText" placeholder="Type a sentence like: I love you"></textarea>
   <br>
   <button id="translateButton">Translate</button>
+  <button id="replayButton" disabled>🔊 Play Again</button>
   <div class="output" id="outputText"></div>
 
   <script>
@@ -70,6 +72,8 @@
       "continuous": "in"
     };
 
+    let lastZalvoxOutput = "";
+
     function detectMood(text) {
       if (text.includes("!")) return "command";
       if (text.includes("?")) return "question";
@@ -82,6 +86,14 @@
       const v = vowelMoods[mood];
       const newVerb = verb.replace(/[aeiou]/g, v);
       return newVerb + tenseSuffix[tense];
+    }
+
+    function speakZalvox(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.pitch = 1.2;
+      utterance.rate = 0.9;
+      speechSynthesis.speak(utterance);
     }
 
     function handleTranslate() {
@@ -110,9 +122,19 @@
       }
 
       document.getElementById("outputText").innerText = output;
+      lastZalvoxOutput = output;
+      document.getElementById("replayButton").disabled = false;
+      speakZalvox(output);
+    }
+
+    function replayZalvox() {
+      if (lastZalvoxOutput) {
+        speakZalvox(lastZalvoxOutput);
+      }
     }
 
     document.getElementById("translateButton").addEventListener("click", handleTranslate);
+    document.getElementById("replayButton").addEventListener("click", replayZalvox);
   </script>
 </body>
 </html>
