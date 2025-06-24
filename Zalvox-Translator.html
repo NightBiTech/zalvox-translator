@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Zalvox Translator</title>
   <style>
     body {
@@ -36,80 +36,78 @@
 <body>
   <h1>Zalvox Translator</h1>
   <textarea id="inputText" placeholder="Type a sentence like: I love you"></textarea>
-  <br>
+  <br />
   <button id="translateButton">Translate</button>
   <button id="replayButton" disabled>🔊 Play Again</button>
   <div class="output" id="outputText"></div>
 
   <script>
     const dictionary = {
-  // Pronouns
-  "i": "zel",
-  "you": "tu",
-  "he": "nar",
-  "she": "nar",
-  "we": "zelar",
-  "they": "tar",
-  "it": "kit",
+      // Pronouns
+      "i": "zel",
+      "you": "tu",
+      "he": "nar",
+      "she": "nar",
+      "we": "zelar",
+      "they": "tar",
+      "it": "kit",
 
-  // Verbs
-  "eat": "var",
-  "love": "mel",
-  "see": "sek",
-  "say": "sam",
-  "go": "gol",
-  "make": "mal",
-  "know": "nek",
-  "want": "wan",
-  "need": "ned",
-  "come": "kom",
+      // Verbs
+      "eat": "var",
+      "love": "mel",
+      "see": "sek",
+      "say": "sam",
+      "go": "gol",
+      "make": "mal",
+      "know": "nek",
+      "want": "wan",
+      "need": "ned",
+      "come": "kom",
 
-  // Nouns
-  "friend": "sul",
-  "bread": "dom",
-  "water": "aken",
-  "home": "trela",
-  "person": "per",
-  "day": "dai",
-  "night": "nikt",
-  "love": "melu",
-  "food": "fud",
-  "family": "fam",
+      // Nouns
+      "friend": "sul",
+      "bread": "dom",
+      "water": "aken",
+      "home": "trela",
+      "person": "per",
+      "day": "dai",
+      "night": "nikt",
+      "love": "melu",
+      "food": "fud",
+      "family": "fam",
 
-  // Adjectives
-  "good": "gud",
-  "bad": "bad",
-  "big": "big",
-  "small": "smol",
-  "happy": "hap",
-  "sad": "sad",
-  "new": "nu",
-  "old": "old",
+      // Adjectives
+      "good": "gud",
+      "bad": "bad",
+      "big": "big",
+      "small": "smol",
+      "happy": "hap",
+      "sad": "sad",
+      "new": "nu",
+      "old": "old",
 
-  // Prepositions
-  "in": "in",
-  "on": "on",
-  "at": "at",
-  "to": "tu",
-  "from": "fro",
-  "with": "wit",
-  "about": "abou",
+      // Prepositions
+      "in": "in",
+      "on": "on",
+      "at": "at",
+      "to": "tu",
+      "from": "fro",
+      "with": "wit",
+      "about": "abou",
 
-  // Conjunctions
-  "and": "an",
-  "or": "or",
-  "but": "but",
-  "because": "bec",
+      // Conjunctions
+      "and": "an",
+      "or": "or",
+      "but": "but",
+      "because": "bec",
 
-  // Question words
-  "who": "hu",
-  "what": "wat",
-  "where": "wer",
-  "when": "wen",
-  "why": "wai",
-  "how": "hau"
-};
-
+      // Question words
+      "who": "hu",
+      "what": "wat",
+      "where": "wer",
+      "when": "wen",
+      "why": "wai",
+      "how": "hau"
     };
 
     const vowelMoods = {
@@ -147,7 +145,7 @@
 
     function speakZalvox(text) {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
+      utterance.lang = "en-US";
       utterance.pitch = 1.2;
       utterance.rate = 0.9;
       speechSynthesis.speak(utterance);
@@ -155,9 +153,11 @@
 
     function handleTranslate() {
       const input = document.getElementById("inputText").value.toLowerCase();
-      const words = input.replace(/[!?\\.]/g, '').split(" ");
+      const words = input.replace(/[!?\\.]/g, "").split(" ");
 
-      let subject = "", verb = "", object = "";
+      let subject = "",
+        verb = "",
+        object = "";
       const mood = detectMood(input);
       const tense = "present";
 
@@ -190,9 +190,14 @@
       }
     }
 
-    document.getElementById("translateButton").addEventListener("click", handleTranslate);
-    document.getElementById("replayButton").addEventListener("click", replayZalvox);
+    document
+      .getElementById("translateButton")
+      .addEventListener("click", handleTranslate);
+    document
+      .getElementById("replayButton")
+      .addEventListener("click", replayZalvox);
   </script>
 </body>
 </html>
+
 
